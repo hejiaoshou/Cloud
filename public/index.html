@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>chants</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      background: #F2F3F5;
+    }
+
+    .import-box {
+      display: flex;
+
+      width: 100%;
+      height: 40px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+
+      background: #fff;
+    }
+
+    .import-box input {
+      height: 100%;
+      flex: 1;
+      padding: 5px;
+      line-height: 40px;
+
+      border: none;
+      outline: none;
+    }
+
+    .import-box .send{
+      width: 60px;
+      color: #008AFF;
+      line-height: 40px;
+      text-align: center;
+    }
+  </style>
+</head>
+<script src="./socket.io.js"></script>
+<!-- <script src="./vue.js"></script> -->
+<script src="https://vuejs.org/js/vue.js"></script>
+<body>
+  <div id="app">
+    <div class="import-box">
+      <input type="text" v-model="sayContent" id="content">
+      <span class="send" @click="send()">发送</span>
+    </div>
+  </div>
+</body>
+<script>
+  var vm = new Vue({
+    name: 'ioom',
+    el: '#app',
+    data: {
+      socket: io('https://www.ichats.cc/'),
+      sayContent: ''
+    },
+
+    created() {
+      this.socket.on('say', function (res) {
+        console.log(`id-${res.id}说:`);
+        console.log(res.content)
+      })
+
+      this.socket.on('addUser', function (res) {
+        console.log(res.content)
+      })
+    },
+
+    methods: {
+      send() {
+        if (this.sayContent == '') {
+          return 0;
+        }
+
+        this.socket.emit('say',{content: sayContent});
+        this.sayContent = '';
+        console.log(`我说：${userContent}`);
+      }
+    }
+  })
+</script>
+</html>

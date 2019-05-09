@@ -1,12 +1,21 @@
 {
   "name": "im",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "1.0.1",
+  "description": "chat server",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js",
+    "start": "npm run dev"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "h-js",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.7.0",
+    "koa-sslify": "^4.0.3",
+    "koa-static": "^5.0.0",
+    "nodemon": "^1.19.0",
+    "socket.io": "^2.2.0"
+  }
 }
