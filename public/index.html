@@ -4,12 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>chants</title>
+  <title>chats</title>
   <style>
     body {
       padding: 0;
       margin: 0;
       background: #F2F3F5;
+      scroll-behavior: smooth;
+      max-width: 900px;
+      margin: auto;
     }
 
     .import-box {
@@ -27,7 +30,7 @@
     .import-box input {
       height: 100%;
       flex: 1;
-      padding: 5px;
+      padding: 0 5px;
       line-height: 40px;
 
       border: none;
@@ -40,15 +43,60 @@
       line-height: 40px;
       text-align: center;
     }
+
+    .u-say {
+      padding: 5px;
+      background: #fff;
+      border-radius: 10px;
+      margin: 20px;
+    }
+
+    .u-say .u-info {
+      color: #66b976;
+    }
+
+    .m-say {
+
+    }
+
+    .m-say .u-info {
+      color: #6685d3;
+    }
   </style>
 </head>
 <script src="./socket.io.js"></script>
-<!-- <script src="./vue.js"></script> -->
-<script src="https://vuejs.org/js/vue.js"></script>
+<script src="./vue.js"></script>
+<!-- <script src="https://vuejs.org/js/vue.js"></script> -->
 <body>
   <div id="app">
+
+    <div v-for="(item,idx) in saylist" :key="idx">
+
+      <div class="u-say m-say" v-if = "item.isMe">
+        <div class="u-info">
+          <span>我</span>
+          <!-- <span>12:44</span> -->
+        </div>
+        <div class="say-info">
+          <p>{{item.content}}</p>
+        </div>
+      </div>
+
+      <div class="u-say" v-else>
+        <div class="u-info">
+          <span>{{item.id}}</span>
+          <!-- <span>12:44</span> -->
+        </div>
+        <div class="say-info">
+          <p>{{item.content}}</p>
+        </div>
+      </div>
+      
+    </div>
+
+    <div style="height: 50px;"></div>
     <div class="import-box">
-      <input type="text" v-model="sayContent" id="content">
+      <input type="text" v-model="sayContent" ref="user-import" autofocus id="content">
       <span class="send" @click="send()">发送</span>
     </div>
   </div>
@@ -59,29 +107,48 @@
     el: '#app',
     data: {
       socket: io('https://www.ichats.cc/'),
-      sayContent: ''
+      // socket: io('https://localhost/'),
+      sayContent: '',
+      saylist:[]
     },
 
     created() {
-      this.socket.on('say', function (res) {
-        console.log(`id-${res.id}说:`);
-        console.log(res.content)
+      document.onkeydown = (e) => {
+        if (e.key == 'Enter') {
+          this.send()
+        }
+      }
+      this.socket.on('say', (res) => {
+        this.saylist.push(res);
+        this.rollBOttom();
       })
 
-      this.socket.on('addUser', function (res) {
-        console.log(res.content)
+      this.socket.on('addUser', (res) => {
+        this.saylist.push(res);
+        this.rollBOttom();
       })
     },
 
     methods: {
       send() {
+        this.$refs['user-import'].focus()
         if (this.sayContent == '') {
           return 0;
         }
 
-        this.socket.emit('say',{content: sayContent});
+        this.socket.emit('say',{content: this.sayContent});
+        this.saylist.push({
+          content: this.sayContent,
+          isMe: true
+        })
         this.sayContent = '';
-        console.log(`我说：${userContent}`);
+        this.rollBOttom();
+      },
+
+      rollBOttom() {
+        setTimeout(() => {
+          window.scroll(0, document.body.scrollHeight)
+        },10)
       }
     }
   })

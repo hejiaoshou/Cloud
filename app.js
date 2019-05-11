@@ -25,7 +25,7 @@ io.on('connection', function (socket) {
 
   socket.join(roomName, () => {
     let rooms = Object.keys(socket.rooms);
-    socket.to(roomName).emit('addUser', {content: `一位新用户加入了房间！(id:${socket.id})`});
+    socket.to(roomName).emit('addUser', {content: `一位新用户加入了房间！(id:${socket.id})`, id: '系统消息'});
   });
 
   socket.on('say', (data) => {
