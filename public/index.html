@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="shortcut icon" href="https://oss.hedingheng.com/favicon.ico?Expires=1557674649&OSSAccessKeyId=TMP.AgGh4fk3KqeiZTemWqF6Klx6QZZAyfzbCJZKVb_MO7MZUhMrZo3tu_67CTSuAAAwLAIUftiQRlZ-zN77Q51-aWYLKK_2fm4CFCD62Z4ZHZHOwRuOqnXUUfWxOJsD&Signature=g47xYQISQs3xvt1PsoE5D41bLUY%3D" type="image/x-icon">
   <title>chats</title>
   <style>
     body {
@@ -64,8 +65,8 @@
     }
   </style>
 </head>
-<script src="./socket.io.js"></script>
-<script src="./vue.js"></script>
+<script src="https://oss.hedingheng.com/ichats/socket.io.js?Expires=1557674581&OSSAccessKeyId=TMP.AgGh4fk3KqeiZTemWqF6Klx6QZZAyfzbCJZKVb_MO7MZUhMrZo3tu_67CTSuAAAwLAIUftiQRlZ-zN77Q51-aWYLKK_2fm4CFCD62Z4ZHZHOwRuOqnXUUfWxOJsD&Signature=RtPmGrF7X7KRwZzNfIb18CPi%2Fvo%3D"></script>
+<script src="https://oss.hedingheng.com/ichats/vue.js?Expires=1557674678&OSSAccessKeyId=TMP.AgGh4fk3KqeiZTemWqF6Klx6QZZAyfzbCJZKVb_MO7MZUhMrZo3tu_67CTSuAAAwLAIUftiQRlZ-zN77Q51-aWYLKK_2fm4CFCD62Z4ZHZHOwRuOqnXUUfWxOJsD&Signature=tgAtLTcoMUrn9QmD9SuXVbVYgLg%3D"></script>
 <!-- <script src="https://vuejs.org/js/vue.js"></script> -->
 <body>
   <div id="app">
@@ -123,8 +124,9 @@
         this.rollBOttom();
       })
 
-      this.socket.on('addUser', (res) => {
+      this.socket.on('User', (res) => {
         this.saylist.push(res);
+        document.title = `chats - 在线人数：${res.onlineNumber}`;
         this.rollBOttom();
       })
     },
