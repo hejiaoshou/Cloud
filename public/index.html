@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="shortcut icon" href="https://oss.hedingheng.com/favicon.ico?Expires=1557674649&OSSAccessKeyId=TMP.AgGh4fk3KqeiZTemWqF6Klx6QZZAyfzbCJZKVb_MO7MZUhMrZo3tu_67CTSuAAAwLAIUftiQRlZ-zN77Q51-aWYLKK_2fm4CFCD62Z4ZHZHOwRuOqnXUUfWxOJsD&Signature=g47xYQISQs3xvt1PsoE5D41bLUY%3D" type="image/x-icon">
+  <link rel="shortcut icon" href="https://oss.hedingheng.com/favicon.ico" type="image/x-icon">
   <title>chats</title>
   <style>
     body {
@@ -65,8 +65,8 @@
     }
   </style>
 </head>
-<script src="https://oss.hedingheng.com/ichats/socket.io.js?Expires=1557674581&OSSAccessKeyId=TMP.AgGh4fk3KqeiZTemWqF6Klx6QZZAyfzbCJZKVb_MO7MZUhMrZo3tu_67CTSuAAAwLAIUftiQRlZ-zN77Q51-aWYLKK_2fm4CFCD62Z4ZHZHOwRuOqnXUUfWxOJsD&Signature=RtPmGrF7X7KRwZzNfIb18CPi%2Fvo%3D"></script>
-<script src="https://oss.hedingheng.com/ichats/vue.js?Expires=1557674678&OSSAccessKeyId=TMP.AgGh4fk3KqeiZTemWqF6Klx6QZZAyfzbCJZKVb_MO7MZUhMrZo3tu_67CTSuAAAwLAIUftiQRlZ-zN77Q51-aWYLKK_2fm4CFCD62Z4ZHZHOwRuOqnXUUfWxOJsD&Signature=tgAtLTcoMUrn9QmD9SuXVbVYgLg%3D"></script>
+<script src="https://oss.hedingheng.com/ichats/socket.io.js"></script>
+<script src="https://oss.hedingheng.com/ichats/vue.js"></script>
 <!-- <script src="https://vuejs.org/js/vue.js"></script> -->
 <body>
   <div id="app">
@@ -86,7 +86,7 @@
       <div class="u-say" v-else>
         <div class="u-info">
           <span>{{item.id}}</span>
-          <!-- <span>12:44</span> -->
+          <span>{{getTime(item.time)}}</span>
         </div>
         <div class="say-info">
           <p>{{item.content}}</p>
@@ -107,8 +107,8 @@
     name: 'ioom',
     el: '#app',
     data: {
-      socket: io('https://www.ichats.cc/'),
-      // socket: io('https://localhost/'),
+      // socket: io('https://www.ichats.cc/'),
+      socket: io('https://localhost/'),
       sayContent: '',
       saylist:[]
     },
@@ -151,6 +151,15 @@
         setTimeout(() => {
           window.scroll(0, document.body.scrollHeight)
         },10)
+      },
+
+      getTime(time) {
+        let mDate = new Date(time),
+            h = mDate.getHours(),
+            m = mDate.getMinutes(),
+            s = mDate.getSeconds();
+
+        return `${h}:${m}:${s}`
       }
     }
   })
